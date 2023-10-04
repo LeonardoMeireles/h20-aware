@@ -1,24 +1,12 @@
 import React from 'react';
-import { Grommet } from 'grommet';
-import theme from './config/groometTheme';
+import { Box } from 'grommet';
+import H2OHeader from './components/H2OHeader';
 
 function App() {
   return (
-    <Grommet theme={theme} full>
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </Grommet>
+    <Box height={'100%'} background={'#282828'}>
+      <H2OHeader/>
+    </Box>
   );
 }
 
