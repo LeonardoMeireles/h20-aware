@@ -144,7 +144,7 @@ const DinoGame = () => {
             top: '1vmin'
           }}
         >
-          <Text size={'2vmin'}>Score: {parseInt(score.toString())}</Text>
+          <Text size={'3vmin'}>Score: {parseInt(score.toString())}</Text>
         </Box>
         {!gameStarted
           ? <Box
@@ -157,7 +157,7 @@ const DinoGame = () => {
               transform: 'translate(-50%, -50%)'
             }}
           >
-            <Text style={{whiteSpace: 'nowrap'}} size={'2.5vmin'}>Press Any Key to Start</Text>
+            <Text style={{whiteSpace: 'nowrap'}} size={'3vmin'}>Press Any Key to Start</Text>
           </Box>
           : <></>
         }
