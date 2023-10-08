@@ -9,7 +9,7 @@ class Doodler {
         this.x = canvas.width / 2;
         this.y = canvas.height - 200;
         this.image = new Image();
-        this.image.src = 'assets/doodler-right.png'
+        this.image.src = 'assets/right.png'
         this.prevY = this.y;
         this.width = 50;
         this.height = 50;
@@ -86,12 +86,12 @@ class Doodler {
 
     moveRight() {
         this.vx = 4;
-        this.image.src = 'assets/doodler-right.png';
+        this.image.src = 'assets/right.png';
     }
 
     moveLeft () {
         this.vx = -4;
-        this.image.src = 'assets/doodler-left.png';
+        this.image.src = 'assets/left.png';
     }
 
     draw() {
@@ -281,7 +281,7 @@ function loop() {
         return;
     }
 
-    if(score > 20){
+    if(score > 25){
         showFinishMenu();
         return;
     }
