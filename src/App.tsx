@@ -21,6 +21,7 @@ function App() {
   const [showDinoGame] = useState<boolean>(false);
   const parallaxRef = useRef<IParallax>(null!);
   const [currentHeight, setCurrentHeight] = useState(0);
+  const updatePosition = [1200, 1300, 1450, 1650];
 
   //TODO: make proper loader detection for globe and assets
   useEffect(() => {
@@ -36,7 +37,8 @@ function App() {
       <Parallax
         onScrollCapture={(e) => {
           //Avoid re-render on particles, Parallax bug prevents rendering components separately
-          if (parallaxRef.current.current > 1000 && parallaxRef.current.current < 2350) setCurrentHeight(() => parallaxRef.current.current);
+          if (updatePosition.some((position) => (parallaxRef.current.current > position && currentHeight < position) || (parallaxRef.current.current < position && currentHeight > position)))
+            setCurrentHeight(parallaxRef.current.current);
         }}
         ref={parallaxRef}
         pages={10}
@@ -125,31 +127,29 @@ function App() {
           />
         </ParallaxLayer>
 
-        {currentHeight > 1200
-          ? <ParallaxLayer
-            offset={1}
+        <ParallaxLayer
+          offset={1}
+          style={{
+            display: 'flex',
+            justifyContent: 'end',
+            opacity: currentHeight > 1500 ? 1 : 0,
+            transition: '0.5s linear'
+          }}
+          speed={0.1}
+          sticky={{start: 1, end: 2}}
+        >
+          <Text
+            margin={'11.5vh 25vw 0 0'}
+            color={'#FFF'}
+            size={'3.5vmin'}
+            weight={600}
             style={{
-              display: 'flex',
-              justifyContent: 'end',
-              opacity: Math.min((currentHeight - 1400) / 400, 1)
+              textShadow: '0 0 18px #000, 0 0 5px #282828',
             }}
-            speed={0.1}
-            sticky={{start: 1, end: 2}}
           >
-            <Text
-              margin={'11.5vh 25vw 0 0'}
-              color={'#FFF'}
-              size={'3.5vmin'}
-              weight={600}
-              style={{
-                textShadow: '0 0 18px #000, 0 0 5px #282828',
-              }}
-            >
-              Text goes here
-            </Text>
-          </ParallaxLayer>
-          : <></>
-        }
+            Text goes here
+          </Text>
+        </ParallaxLayer>
 
         <ParallaxLayer
           sticky={{start: 1, end: 2}}
