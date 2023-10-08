@@ -65,19 +65,18 @@ function App() {
           <Waves/>
         </ParallaxLayer>
 
-        {currentHeight < 1300
-          ? <ParallaxLayer
-            speed={0.1}
-            sticky={{start: 0, end: 1.25}}
-          >
-            <Image
-              height={'10%'}
-              margin={{left: '77.5vw', top: '60vh'}}
-              src={ajAstronaut}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
+        <ParallaxLayer
+          speed={0.1}
+          sticky={{start: 0, end: 1.25}}
+        >
+          <Image
+            height={'10%'}
+            opacity={(currentHeight < 1300) ? '0.8' : '0'}
+            margin={{left: '77.5vw', top: '60vh'}}
+            src={ajAstronaut}
+            style={{transition: '0.01s linear'}}
+          />
+        </ParallaxLayer>
 
         <ParallaxLayer
           speed={0.1}
@@ -85,9 +84,10 @@ function App() {
         >
           <Image
             //Avoid image loading on hosted web app
-            opacity={(currentHeight > 1300 && currentHeight < 1550) ? '0.8' : '0'}
+            opacity={(currentHeight > 1300 && currentHeight < 1450) ? '0.8' : '0'}
             height={'10%'}
             margin={{left: '74.5vw', top: '60vh'}}
+            style={{transition: '0.01s linear'}}
             src={ajSplash}
           />
         </ParallaxLayer>
@@ -99,12 +99,12 @@ function App() {
           <Image
             height={'10%'}
             //Avoid image loading on hosted web app
-            opacity={currentHeight > 1550 ? '0.8' : '0'}
+            opacity={currentHeight > 1450 ? '0.8' : '0'}
             margin={{
-              left: `${currentHeight > 1600 ? 50 : 77.5}vw`,
-              top: `60vh`,
+              left: `${currentHeight > 1650 ? 50 : 76}vw`,
+              top: `${currentHeight > 1650 ? 70 : 60}vh`,
             }}
-            style={{transition: 'margin-left 0.7s linear'}}
+            style={{transition: '0.2s linear'}}
             src={ajBasic}
           />
         </ParallaxLayer>
