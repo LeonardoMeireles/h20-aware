@@ -26,6 +26,11 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
@@ -49,6 +54,40 @@
             "name": "long",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/clouds/lat/{lat}/long/{long}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "long",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
             "type": "string"
           }
         ],

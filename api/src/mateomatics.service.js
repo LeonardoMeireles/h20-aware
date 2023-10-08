@@ -13,6 +13,8 @@ const FORMAT = {
     JSON: 'json',
 }
 
+const DEFAULT_RETURN_FORMAT = FORMAT.HTML;
+
 /**
  * Get token from Mateomatics API
  * 
@@ -38,7 +40,13 @@ const mountQuery = async (query) => {
     return query + '?access_token=' + accessToken;
 }
 
-const getPrecipitation = async (lat, long, daysBehind = 2, precipInterval = 5) => {
+const formatData = (data, returnFormat, title) => {
+    return returnFormat === FORMAT.HTML
+        ? removeCSVPartFromHTML(data, title)
+        : data;
+}
+
+const getPrecipitation = async (lat, long, returnFormat = DEFAULT_RETURN_FORMAT, daysBehind = 2, precipInterval = 5) => {
     const today = new Date();
     const endDateFormatted = formatDate(today);
     const startDate = subDays(today, daysBehind);
@@ -47,25 +55,41 @@ const getPrecipitation = async (lat, long, daysBehind = 2, precipInterval = 5) =
     const datePart = `${startDateFormatted}--${endDateFormatted}`;
     const precipPart = `:PT${precipInterval}M/precip_${precipInterval}min:mm/`;
     const coordinatesPart = `${lat},${long}/`;
-    const formatPart = FORMAT.HTML;
 
-    const combinedParts = datePart + precipPart + coordinatesPart + formatPart;
+    const combinedParts = datePart + precipPart + coordinatesPart + returnFormat;
 
     const query = await mountQuery(combinedParts);
     const { data } = await mateomaticsApi.get(query);
 
-    const html = removeCSVPartFromHTML(data, 'Precipitation');
+    const result = formatData(data, returnFormat, 'Precipitation');
 
-    return html;
+    return result;
 }
 
-// Negative values indicate evaporation, while positive values indicate condensation.
-const getEvaporation = async (lat, long, daysBehind = 2, evaporationInterval = 1) => {
+const getEvaporation = async (lat, long, returnFormat = DEFAULT_RETURN_FORMAT, daysBehind = 2, evaporationInterval = 1) => {
     const today = new Date();
     const endDateFormatted = formatDate(today);
 
     const datePart = `${endDateFormatted}`;
     const evaporationPart = `P${daysBehind}D:PT${evaporationInterval}H/evaporation_${evaporationInterval}h:mm/`;
+    const coordinatesPart = `${lat},${long}/`;
+
+    const combinedParts = datePart + evaporationPart + coordinatesPart + returnFormat;
+
+    const query = await mountQuery(combinedParts);
+    const { data } = await mateomaticsApi.get(query);
+
+    const result = formatData(data, returnFormat, 'Evaporation');
+
+    return result;
+}
+
+const getClouds = async (lat, long, returnFormat = DEFAULT_RETURN_FORMAT,) => {
+    const today = new Date();
+    const endDateFormatted = formatDate(today);
+
+    const datePart = `${endDateFormatted}`;
+    const evaporationPart = `/effective_cloud_cover:octas/`;
     const coordinatesPart = `${lat},${long}/`;
     const formatPart = FORMAT.HTML;
 
@@ -74,32 +98,13 @@ const getEvaporation = async (lat, long, daysBehind = 2, evaporationInterval = 1
     const query = await mountQuery(combinedParts);
     const { data } = await mateomaticsApi.get(query);
 
-    const html = removeCSVPartFromHTML(data, 'Evaporation');
+    const result = formatData(data, returnFormat, 'Clouds');
 
-    return html;
-}
-
-// Negative values indicate evaporation, while positive values indicate condensation.
-const getClouds = async (lat, long, daysBehind = 2, evaporationInterval = 1) => {
-    const today = new Date();
-    const endDateFormatted = formatDate(today);
-
-    const datePart = `${endDateFormatted}`;
-    const evaporationPart = `P${daysBehind}D:PT${evaporationInterval}H/evaporation_${evaporationInterval}h:mm/`;
-    const coordinatesPart = `${lat},${long}/`;
-    const formatPart = FORMAT.HTML;
-
-    const combinedParts = datePart + evaporationPart + coordinatesPart + formatPart;
-
-    const query = await mountQuery(combinedParts);
-    const { data } = await mateomaticsApi.get(query);
-
-    const html = removeCSVPartFromHTML(data);
-
-    return html;
+    return result;
 }
 
 module.exports = {
     getPrecipitation,
-    getEvaporation
+    getEvaporation,
+    getClouds
 }
