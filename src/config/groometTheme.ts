@@ -1,7 +1,7 @@
 const theme = {
   global: {
     font: {
-      family: 'Montserrat',
+      family: 'Poppins',
       size: '16px',
       height: '20px',
     },

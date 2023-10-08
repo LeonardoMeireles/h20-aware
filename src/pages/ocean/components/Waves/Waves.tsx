@@ -16,6 +16,7 @@ const Waves = () => {
     window.addEventListener('resize', () => resize(waves, ctx, waveGroup, pixelRatio));
     window.requestAnimationFrame(() => animate(waves, ctx, waveGroup, pixelRatio));
     resize(waves, ctx, waveGroup, pixelRatio);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function resize(waves: any, ctx: any, waveGroup: WaveGroup, pixelRatio: number) {
