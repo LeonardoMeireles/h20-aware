@@ -101,9 +101,10 @@ function App() {
             //Avoid image loading on hosted web app
             opacity={currentHeight > 1550 ? '0.8' : '0'}
             margin={{
-              left: `${Math.max(202.5 - (currentHeight * 0.08), 50)}vw`,
-              top: `60vh`
+              left: `${currentHeight > 1600 ? 50 : 77.5}vw`,
+              top: `60vh`,
             }}
+            style={{transition: 'margin-left 0.7s linear'}}
             src={ajBasic}
           />
         </ParallaxLayer>
