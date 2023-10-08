@@ -10,7 +10,7 @@ import ajAstronaut from './assets/images/aj/aj-astronaut.png';
 import ajSplash from './assets/images/aj/aj-splash.png';
 import ajBasic from './assets/images/aj/aj-basic.svg';
 import fishAnimation from './assets/gifs/ocean/fish-animation.gif';
-import AquaGlobe from './pages/home-page/utils/components/AquaGlobe';
+import AquaGlobe from './pages/home-page/components/AquaGlobe';
 import LoadingPage from './pages/loading-page/LoadingPage';
 import AJChatBot from './pages/bot-page/AJChatBot';
 
@@ -19,10 +19,9 @@ import AJChatBot from './pages/bot-page/AJChatBot';
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [showDinoGame] = useState<boolean>(false);
   const parallaxRef = useRef<IParallax>(null!);
   const [currentHeight, setCurrentHeight] = useState(0);
-  const updatePosition = [1200, 1300, 1450, 1650];
+  const updatePosition = [1200, 1300, 1450, 1650, 2500];
 
   //TODO: make proper loader detection for globe and assets
   useEffect(() => {
@@ -43,7 +42,7 @@ function App() {
             setCurrentHeight(parallaxRef.current.current);
         }}
         ref={parallaxRef}
-        pages={10}
+        pages={3.8}
       >
 
         <HomePage/>
@@ -135,7 +134,7 @@ function App() {
             display: 'flex',
             justifyContent: 'end',
             opacity: currentHeight > 1500 ? 1 : 0,
-            transition: '0.5s linear'
+            transition: 'opacity 0.5s linear'
           }}
           speed={0.1}
           sticky={{start: 1, end: 2}}
@@ -149,7 +148,7 @@ function App() {
               textShadow: '0 0 18px #000, 0 0 5px #282828',
             }}
           >
-             "Hi! Are you ready to join me on this aquatic journey?"
+            "Hi! Are you ready to join me on this aquatic journey?"
           </Text>
         </ParallaxLayer>
 
@@ -177,12 +176,17 @@ function App() {
             src={fishAnimation}
           />
         </ParallaxLayer>
-
+        <ParallaxLayer
+          offset={3}
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            backgroundImage: 'linear-gradient(#007EC7, #383838, #383838, #383838)'
+          }}
+        >
+          <DinoGame/>
+        </ParallaxLayer>
       </Parallax>
-      {showDinoGame
-        ? <DinoGame/>
-        : <></>
-      }
     </Box>
   );
 }

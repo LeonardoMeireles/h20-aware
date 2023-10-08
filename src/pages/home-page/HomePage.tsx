@@ -1,5 +1,5 @@
 import { Box, Text } from 'grommet';
-import Space from './utils/components/Space';
+import Space from './components/Space';
 import { ParallaxLayer } from '@react-spring/parallax';
 import React from 'react';
 

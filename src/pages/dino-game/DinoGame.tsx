@@ -84,7 +84,7 @@ const DinoGame = () => {
         return handleLose();
       }
 
-      if (score.current >= 10) {
+      if (score.current >= 50) {
         return handleWin();
       }
       lastTime.current = time;
@@ -139,6 +139,7 @@ const DinoGame = () => {
         justify={'center'}
         alignContent={'center'}
         overflow={'hidden'}
+        margin={{top: '10vh'}}
         width={worldSize.width + 'px'}
         height={worldSize.height + 'px'}
         style={{
@@ -146,7 +147,8 @@ const DinoGame = () => {
           backgroundRepeat: 'no-repeat',
           backgroundSize: `100% 100%`,
           userSelect: 'none',
-          minHeight: '20%',
+          minHeight: '50%',
+          maxHeight: '50%',
           position: 'relative'
         }}
         className={'world'}

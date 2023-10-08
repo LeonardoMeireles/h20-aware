@@ -1,7 +1,7 @@
 import Globe from 'react-globe.gl';
 import { useEffect, useRef, useState } from 'react';
-import { DEFAULT_GLOBE_CANVAS_SCALE } from '../constants';
-import clouds from '../../../../assets/images/globe/clouds.png';
+import { DEFAULT_GLOBE_CANVAS_SCALE } from '../utils/constants';
+import clouds from '../../../assets/images/globe/clouds.png';
 import * as THREE from 'three';
 import { Box } from 'grommet';
 

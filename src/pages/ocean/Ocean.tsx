@@ -23,14 +23,14 @@ const Ocean = ({currentHeight}: { currentHeight: number }) => {
           opacity={`${numBetween(0.01, 0.1)}`}
           width={'128px'}
           src={cloudAnimation}
-          margin={{left: `${CLOUD_LEFT[index]}%`, top: `${CLOUD_HEIGHT[index]}%`}}
+          margin={{left: `${CLOUD_LEFT[index]}vw`, top: `${CLOUD_HEIGHT[index]}vh`}}
         />
         <Image
           style={{display: 'block'}}
           opacity={`${numBetween(0.01, 0.1)}`}
           width={'128px'}
           src={cloudAnimation}
-          margin={{left: `${CLOUD_LEFT[index + 1]}%`, top: `${CLOUD_HEIGHT[index + 1]}%`}}
+          margin={{left: `${CLOUD_LEFT[index + 1]}vw`, top: `${CLOUD_HEIGHT[index + 1]}vh`}}
         />
       </ParallaxLayer>;
     })
@@ -118,11 +118,11 @@ const Ocean = ({currentHeight}: { currentHeight: number }) => {
             />
           </ParallaxLayer>
           <ParallaxLayer
-            offset={2.8}
+            offset={2.5}
             speed={0.2}
           >
             <Image
-              margin={{left: '10vw', top: '50vh'}}
+              margin={{left: '10vw', top: '30vh'}}
               height={'15%'}
               style={{opacity: Math.min((currentHeight - 1400) / 1000, 0.2)}}
               src={mist}
@@ -144,7 +144,7 @@ const Ocean = ({currentHeight}: { currentHeight: number }) => {
             speed={0.4}
           >
             <Image
-              margin={{left: '55vw', top: '70vh'}}
+              margin={{left: '55vw', top: '350vh'}}
               height={'15%'}
               style={{opacity: Math.min((currentHeight - 1400) / 1000, 0.2)}}
               src={mist}
@@ -173,7 +173,7 @@ const Ocean = ({currentHeight}: { currentHeight: number }) => {
             />
           </ParallaxLayer>
           <ParallaxLayer
-            offset={2.3}
+            offset={2}
             speed={0.4}
           >
             <Image
