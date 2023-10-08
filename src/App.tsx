@@ -6,7 +6,6 @@ import { IParallax, Parallax, ParallaxLayer } from '@react-spring/parallax';
 import Ocean from './pages/ocean/Ocean';
 import Waves from './pages/ocean/components/Waves/Waves';
 import smilingSun from './assets/gifs/ocean/smiling-sun.gif';
-import mist from './assets/gifs/ocean/mist.gif';
 import ajAstronaut from './assets/images/aj/aj-astronaut.png';
 import ajSplash from './assets/images/aj/aj-splash.png';
 import ajBasic from './assets/images/aj/aj-basic.svg';
@@ -19,7 +18,7 @@ import LoadingPage from './pages/loading-page/LoadingPage';
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [showDinoGame] = useState<boolean>(false);
+  const [showDinoGame] = useState<boolean>(true);
   const parallaxRef = useRef<IParallax>(null!);
   const [currentHeight, setCurrentHeight] = useState(0);
 
@@ -29,6 +28,7 @@ function App() {
       setIsLoading(false);
     }, 1000);
   }, []);
+
 
   return (
     <Box height={'100vh'} width={'100vw'}>

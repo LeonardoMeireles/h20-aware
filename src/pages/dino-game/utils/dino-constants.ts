@@ -1,4 +1,4 @@
-import dinoStationary from '../../../assets/images/dino-game/dino-stationary.png';
+import dinoStationary from '../../../assets/images/dino-game/dino-stationary.svg';
 import { Dinosaur } from '../components/Dino';
 
 export const JUMP_SPEED = 0.40;
