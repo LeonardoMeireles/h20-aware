@@ -17,8 +17,8 @@ import LoadingPage from './pages/loading-page/LoadingPage';
 //this has forced us to take several shortcuts, hence the big App component.
 
 function App() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [showDinoGame] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [showDinoGame] = useState<boolean>(false);
   const parallaxRef = useRef<IParallax>(null!);
   const [currentHeight, setCurrentHeight] = useState(0);
 
@@ -36,7 +36,7 @@ function App() {
       <Parallax
         onScrollCapture={(e) => {
           //Avoid re-render on particles, Parallax bug prevents rendering components separately
-          if (parallaxRef.current.current > 1250 && parallaxRef.current.current < 2350) setCurrentHeight(parallaxRef.current.current);
+          if (parallaxRef.current.current > 1000 && parallaxRef.current.current < 2350) setCurrentHeight(() => parallaxRef.current.current);
         }}
         ref={parallaxRef}
         pages={10}
