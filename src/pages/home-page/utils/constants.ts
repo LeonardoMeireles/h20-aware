@@ -1,0 +1,1 @@
+export const DEFAULT_GLOBE_CANVAS_SCALE = 0.36;
