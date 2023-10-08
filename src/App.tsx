@@ -149,7 +149,7 @@ function App() {
               textShadow: '0 0 18px #000, 0 0 5px #282828',
             }}
           >
-            Text goes here
+             "Hi! Are you ready to join me on this aquatic journey?"
           </Text>
         </ParallaxLayer>
 
