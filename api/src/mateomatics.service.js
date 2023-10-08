@@ -103,8 +103,34 @@ const getClouds = async (lat, long, returnFormat = DEFAULT_RETURN_FORMAT,) => {
     return result;
 }
 
+const getHumidity = async (lat, long, returnFormat = DEFAULT_RETURN_FORMAT, daysBehind = 2, precipInterval = 1) => {
+    const today = new Date();
+    const endDateFormatted = formatDate(today);
+    const startDate = subDays(today, daysBehind);
+    const startDateFormatted = formatDate(startDate);
+
+    const datePart = `${startDateFormatted}--${endDateFormatted}`;
+    const precipPart = `:PT${precipInterval}M/`;
+
+    const altitudes = [2, 20, 200, 500, 700];
+
+    const relativeHumidity = altitudes.map(altitude => `relative_humidity_${altitude}m:p`).join(',');
+
+    const coordinatesPart = `/${lat},${long}/`;
+
+    const combinedParts = datePart + precipPart + relativeHumidity + coordinatesPart + returnFormat;
+
+    const query = await mountQuery(combinedParts);
+    const { data } = await mateomaticsApi.get(query);
+
+    const result = formatData(data, returnFormat, 'Humidity');
+
+    return result;
+}
+
 module.exports = {
     getPrecipitation,
     getEvaporation,
-    getClouds
+    getClouds,
+    getHumidity
 }
