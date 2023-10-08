@@ -13,8 +13,8 @@ import ajBasic from './assets/images/aj/aj-basic.svg';
 import AquaGlobe from './pages/home-page/utils/components/AquaGlobe';
 import fishAnimation from './assets/gifs/fish-animation.gif';
 
-{/*There is a bug on React Spring that prevents sticking a component if its not within parent Parallax*/}
-{/*this has forced us to take several shortcuts, hence the big App component.*/}
+//There is a bug on React Spring that prevents sticking a component if its not within parent Parallax
+//this has forced us to take several shortcuts, hence the big App component.
 
 function App() {
   const [showDinoGame] = useState<boolean>(false);
@@ -94,28 +94,31 @@ function App() {
           : <></>
         }
 
-        {currentHeight > 1300 && currentHeight < 1650
+        {currentHeight > 1300 && currentHeight < 1550
           ? <ParallaxLayer
             speed={0.1}
             sticky={{start: 1, end: 2}}
           >
             <Image
               height={'10%'}
-              margin={{left: '77%', top: '60%'}}
+              margin={{left: '77%', top: '70%'}}
               src={ajSplash}
             />
           </ParallaxLayer>
           : <></>
         }
 
-        {currentHeight > 1650
+        {currentHeight > 1550
           ? <ParallaxLayer
-            speed={-50}
-            sticky={{start: 1.15, end: 2}}
+            speed={1}
+            sticky={{start: 1, end: 2}}
           >
             <Image
               height={'10%'}
-              margin={{left: `${163.5 - (currentHeight * 0.05)}%`, top: `60%`}}
+              margin={{
+                left: `${Math.max(204.5 - (currentHeight * 0.08), 50)}%`,
+                top: `70%`
+              }}
               src={ajBasic}
             />
           </ParallaxLayer>
