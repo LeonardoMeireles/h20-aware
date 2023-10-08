@@ -17,7 +17,7 @@ import LoadingPage from './pages/loading-page/LoadingPage';
 //this has forced us to take several shortcuts, hence the big App component.
 
 function App() {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [showDinoGame] = useState<boolean>(true);
   const parallaxRef = useRef<IParallax>(null!);
   const [currentHeight, setCurrentHeight] = useState(0);
