@@ -12,6 +12,7 @@ import ajBasic from './assets/images/aj/aj-basic.svg';
 import fishAnimation from './assets/gifs/ocean/fish-animation.gif';
 import AquaGlobe from './pages/home-page/utils/components/AquaGlobe';
 import LoadingPage from './pages/loading-page/LoadingPage';
+import AJChatBot from './pages/bot-page/AJChatBot';
 
 //There is a bug on React Spring that prevents sticking a component if its not within parent Parallax
 //this has forced us to take several shortcuts, hence the big App component.
@@ -32,8 +33,9 @@ function App() {
 
 
   return (
-    <Box height={'100vh'} width={'100vw'}>
+    <Box background={'#282828'} height={'100vh'} width={'100vw'}>
       <LoadingPage isLoading={isLoading}/>
+      <AJChatBot/>
       <Parallax
         onScrollCapture={(e) => {
           //Avoid re-render on particles, Parallax bug prevents rendering components separately
