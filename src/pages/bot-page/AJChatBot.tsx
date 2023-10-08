@@ -11,7 +11,6 @@ const AJChatBot = () => {
         ? <Layer
           onEsc={() => setShowChat(false)}
           onClickOutside={() => {
-            console.log('Test');
             setShowChat(false);
           }}
           background={{size: '0px'}}
