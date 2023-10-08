@@ -1,28 +1,38 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Image, Text } from 'grommet';
 import DinoGame from './pages/dino-game/DinoGame';
 import HomePage from './pages/home-page/HomePage';
 import { IParallax, Parallax, ParallaxLayer } from '@react-spring/parallax';
 import Ocean from './pages/ocean/Ocean';
 import Waves from './pages/ocean/components/Waves/Waves';
-import smilingSun from './assets/gifs/smiling-sun.gif';
-import mist from './assets/gifs/mist.gif';
+import smilingSun from './assets/gifs/ocean/smiling-sun.gif';
+import mist from './assets/gifs/ocean/mist.gif';
 import ajAstronaut from './assets/images/aj/aj-astronaut.png';
 import ajSplash from './assets/images/aj/aj-splash.png';
 import ajBasic from './assets/images/aj/aj-basic.svg';
+import fishAnimation from './assets/gifs/ocean/fish-animation.gif';
 import AquaGlobe from './pages/home-page/utils/components/AquaGlobe';
-import fishAnimation from './assets/gifs/fish-animation.gif';
+import LoadingPage from './pages/loading-page/LoadingPage';
 
 //There is a bug on React Spring that prevents sticking a component if its not within parent Parallax
 //this has forced us to take several shortcuts, hence the big App component.
 
 function App() {
+  const [isLoading, setIsLoading] = React.useState(true);
   const [showDinoGame] = useState<boolean>(false);
   const parallaxRef = useRef<IParallax>(null!);
   const [currentHeight, setCurrentHeight] = useState(0);
 
+  //TODO: make proper loader detection for globe and assets
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   return (
-    <Box height={'100vh'}>
+    <Box height={'100vh'} width={'100vw'}>
+      <LoadingPage isLoading={isLoading}/>
       <Parallax
         onScrollCapture={(e) => {
           //Avoid re-render on particles, Parallax bug prevents rendering components separately
@@ -45,7 +55,7 @@ function App() {
           <AquaGlobe/>
         </ParallaxLayer>
 
-        <Ocean/>
+        <Ocean currentHeight={currentHeight}/>
 
         <ParallaxLayer
           offset={1}
@@ -55,31 +65,6 @@ function App() {
           <Waves/>
         </ParallaxLayer>
 
-        <ParallaxLayer
-          sticky={{start: 1, end: 2}}
-          speed={-0.6}
-          style={{opacity: 0.5}}
-        >
-          <Image
-            margin={{left: '50%', top: '120%'}}
-            style={{display: 'block', position: 'absolute'}}
-            width={'128px'}
-            src={fishAnimation}
-          />
-          <Image
-            margin={{left: '10%', top: '105%'}}
-            style={{display: 'block', position: 'absolute'}}
-            width={'128px'}
-            src={fishAnimation}
-          />
-          <Image
-            style={{display: 'block', position: 'absolute'}}
-            margin={{left: '90%', top: '115%'}}
-            width={'128px'}
-            src={fishAnimation}
-          />
-        </ParallaxLayer>
-
         {currentHeight < 1300
           ? <ParallaxLayer
             speed={0.1}
@@ -87,43 +72,41 @@ function App() {
           >
             <Image
               height={'10%'}
-              margin={{left: '79.5%', top: '60%'}}
+              margin={{left: '77.5vw', top: '60vh'}}
               src={ajAstronaut}
             />
           </ParallaxLayer>
           : <></>
         }
 
-        {currentHeight > 1300 && currentHeight < 1550
-          ? <ParallaxLayer
-            speed={0.1}
-            sticky={{start: 1, end: 2}}
-          >
-            <Image
-              height={'10%'}
-              margin={{left: '77%', top: '70%'}}
-              src={ajSplash}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
+        <ParallaxLayer
+          speed={0.1}
+          sticky={{start: 1, end: 2}}
+        >
+          <Image
+            //Avoid image loading on hosted web app
+            opacity={(currentHeight > 1300 && currentHeight < 1550) ? '0.8' : '0'}
+            height={'10%'}
+            margin={{left: '74.5vw', top: '60vh'}}
+            src={ajSplash}
+          />
+        </ParallaxLayer>
 
-        {currentHeight > 1550
-          ? <ParallaxLayer
-            speed={1}
-            sticky={{start: 1, end: 2}}
-          >
-            <Image
-              height={'10%'}
-              margin={{
-                left: `${Math.max(204.5 - (currentHeight * 0.08), 50)}%`,
-                top: `70%`
-              }}
-              src={ajBasic}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
+        <ParallaxLayer
+          speed={1}
+          sticky={{start: 1, end: 2}}
+        >
+          <Image
+            height={'10%'}
+            //Avoid image loading on hosted web app
+            opacity={currentHeight > 1550 ? '0.8' : '0'}
+            margin={{
+              left: `${Math.max(202.5 - (currentHeight * 0.08), 50)}vw`,
+              top: `60vh`
+            }}
+            src={ajBasic}
+          />
+        </ParallaxLayer>
 
         <ParallaxLayer
           offset={1}
@@ -135,76 +118,11 @@ function App() {
               borderRadius: '50%',
               boxShadow: 'inset 0px 0px 100px rgb(232, 218, 130, 0.1)'
             }}
-            margin={{left: '2vh', top: '5vh'}}
+            margin={{left: '3vw', top: '5vh'}}
             height={'15%'}
             src={smilingSun}
           />
         </ParallaxLayer>
-
-
-        {currentHeight > 1200
-          ? <ParallaxLayer
-            offset={1}
-            speed={0.1}
-            sticky={{start: 1, end: 2}}
-          >
-            <Image
-              margin={{left: '2vh', top: '35vh'}}
-              height={'15%'}
-              style={{opacity: Math.min((currentHeight - 1400) / 1000, 0.2)}}
-              src={mist}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
-
-        {currentHeight > 1200
-          ? <ParallaxLayer
-            offset={1}
-            speed={0.1}
-            sticky={{start: 1, end: 2}}
-          >
-            <Image
-              margin={{left: '25vh', top: '40vh'}}
-              height={'15%'}
-              style={{opacity: Math.min((currentHeight - 1400) / 1000, 0.2)}}
-              src={mist}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
-
-        {currentHeight > 1200
-          ? <ParallaxLayer
-            offset={1}
-            speed={0.1}
-            sticky={{start: 1, end: 2}}
-          >
-            <Image
-              margin={{left: '45vh', top: '35vh'}}
-              height={'15%'}
-              style={{opacity: Math.min((currentHeight - 1400) / 1000, 0.2)}}
-              src={mist}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
-
-        {currentHeight > 1200
-          ? <ParallaxLayer
-            offset={1}
-            speed={0.1}
-            sticky={{start: 1, end: 2}}
-          >
-            <Image
-              margin={{left: '65vh', top: '40vh'}}
-              height={'15%'}
-              style={{opacity: Math.min((currentHeight - 1400) / 1000, 0.2)}}
-              src={mist}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
 
         {currentHeight > 1200
           ? <ParallaxLayer
@@ -232,6 +150,30 @@ function App() {
           : <></>
         }
 
+        <ParallaxLayer
+          sticky={{start: 1, end: 2}}
+          speed={-0.2}
+          style={{opacity: 0.5}}
+        >
+          <Image
+            margin={{left: '50vw', top: '85vh'}}
+            style={{display: 'block', position: 'absolute'}}
+            width={'128px'}
+            src={fishAnimation}
+          />
+          <Image
+            margin={{left: '10vw', top: '75vh'}}
+            style={{display: 'block', position: 'absolute'}}
+            width={'128px'}
+            src={fishAnimation}
+          />
+          <Image
+            style={{display: 'block', position: 'absolute'}}
+            margin={{left: '85vw', top: '70vh'}}
+            width={'128px'}
+            src={fishAnimation}
+          />
+        </ParallaxLayer>
 
       </Parallax>
       {showDinoGame

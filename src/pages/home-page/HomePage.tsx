@@ -1,9 +1,6 @@
-import { Box, Image, Text } from 'grommet';
+import { Box, Text } from 'grommet';
 import Space from './utils/components/Space';
 import { ParallaxLayer } from '@react-spring/parallax';
-import Waves from '../ocean/components/Waves/Waves';
-import cloudAnimation from '../../assets/gifs/cloud-animation.gif';
-import AquaGlobe from './utils/components/AquaGlobe';
 import React from 'react';
 
 const HomePage = () => {

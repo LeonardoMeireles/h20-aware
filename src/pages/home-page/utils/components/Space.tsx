@@ -8,7 +8,6 @@ const Space = () => {
 
   const particlesInit = useCallback(async (engine: any) => {
     if (!loaded.current) {
-      console.log('Test');
       await loadSlim(engine);
     }
     loaded.current = true;
