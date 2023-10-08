@@ -5,14 +5,17 @@ import Dino, { Dinosaur, handleJump, handleRun, onJump } from './components/Dino
 import Cactus, { CactusConfig, updateCactus } from './components/Cactus';
 import { DEFAULT_SPEED, SPEED_SCALE_INCREASE, WORLD_DEFAULT_DIMENSIONS, WorldDimension } from './utils/world-constants';
 import { DEFAULT_DINO } from './utils/dino-constants';
-import dinoLose from '../../assets/images/dino-game/dino-lose.png';
+import dinoLose from '../../assets/images/dino-game/dino-lose.svg';
+import dinoRun0 from '../../assets/images/dino-game/dino-run-0.svg';
+import background from '../../assets/images/dino-game/background.png';
 import { DEFAULT_CACTUS } from './utils/cactus-constants';
 
 const DinoGame = () => {
     const [gameStarted, setGameStarted] = useState<boolean>(false);
+    const [gameWon, setGameWon] = useState<boolean>(false);
     const [worldSize, setWorldSize] = useState<WorldDimension>(WORLD_DEFAULT_DIMENSIONS);
-    const [score, setScore] = useState(0);
     const [groundPosition, setGroundPosition] = useState(0);
+    const score = useRef(0);
     const cactusConfig = useRef<CactusConfig>(DEFAULT_CACTUS);
     const dino = useRef<Dinosaur>(DEFAULT_DINO);
     const speed = useRef(DEFAULT_SPEED);
@@ -22,10 +25,10 @@ const DinoGame = () => {
 
     function startGame() {
       speed.current = DEFAULT_SPEED;
-      setScore(0);
+      score.current = 0;
       setGroundPosition(0);
       dino.current = DEFAULT_DINO;
-      cactusConfig.current.cactiPosition = [];
+      cactusConfig.current.cacti = [];
       setGameStarted(true);
     }
 
@@ -52,6 +55,11 @@ const DinoGame = () => {
       }, 100);
     }
 
+    function handleWin() {
+      setGameWon(true);
+      dino.current.currentImage = dinoRun0;
+    }
+
     function animate(time: number) {
       if (!lastTime.current) {
         lastTime.current = time;
@@ -61,7 +69,7 @@ const DinoGame = () => {
 
       deltaTime.current = time - lastTime.current;
       speed.current = speed.current + SPEED_SCALE_INCREASE;
-      setScore((score) => score + (deltaTime.current * 0.001) + speed.current);
+      score.current = score.current + (deltaTime.current * 0.001) + speed.current;
 
       //Animate entities
       setGroundPosition((groundPosition) => {
@@ -74,6 +82,10 @@ const DinoGame = () => {
 
       if (checkLose()) {
         return handleLose();
+      }
+
+      if (score.current >= 10) {
+        return handleWin();
       }
       lastTime.current = time;
       requestAnimationFrame(animate);
@@ -130,6 +142,9 @@ const DinoGame = () => {
         width={worldSize.width + 'px'}
         height={worldSize.height + 'px'}
         style={{
+          backgroundImage: `url(${background})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: `100% 100%`,
           userSelect: 'none',
           minHeight: '20%',
           position: 'relative'
@@ -144,7 +159,18 @@ const DinoGame = () => {
             top: '1vmin'
           }}
         >
-          <Text size={'3vmin'}>Score: {parseInt(score.toString())}</Text>
+          <Text
+            color={'#282828'}
+            weight={600}
+            style={{
+              textShadow: 'rgb(255 255 255) 0px 1px 1px, rgb(255 255 255) 0px 3px 1px',
+              whiteSpace: 'nowrap'
+            }}
+            margin={{right: '5vw'}}
+            size={'3vmin'}
+          >
+            Score: {parseInt(score.current.toString())}
+          </Text>
         </Box>
         {!gameStarted
           ? <Box
@@ -157,18 +183,61 @@ const DinoGame = () => {
               transform: 'translate(-50%, -50%)'
             }}
           >
-            <Text style={{whiteSpace: 'nowrap'}} size={'3vmin'}>Press Any Key to Start</Text>
+            <Text
+              color={'#f3f3f3'}
+              style={{
+                textShadow: '0 0 18px #000, 0 0 5px #282828',
+                whiteSpace: 'nowrap'
+              }}
+              size={'3vmin'}
+            >
+              Press Any Key to Start
+            </Text>
           </Box>
           : <></>
         }
-        {cactusConfig.current.cactiPosition.map((cactusPosition) => {
-          return <Cactus key={cactusPosition} cactusPosition={cactusPosition}/>;
+        {gameWon
+          ? <Box
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: 'fit-content',
+              justifyItems: 'center',
+              alignItems: 'center',
+              //Makes it so text is centered instead of starting inline at center
+              transform: 'translate(-50%, -50%)'
+            }}
+          >
+            <Text
+              weight={800}
+              color={'#f3f3f3'}
+              style={{
+                textShadow: '0 0 18px #000, 0 0 5px #282828',
+              }}
+              size={'3vmin'}
+            >
+              Congratulations!
+            </Text>
+            <Text
+              weight={800}
+              color={'#f3f3f3'}
+              style={{
+                textShadow: '0 0 18px #000, 0 0 5px #282828',
+              }}
+              size={'2vmin'}
+            >
+              You won!
+            </Text>
+          </Box>
+          : <></>
+        }
+        {cactusConfig.current.cacti.map((cactus) => {
+          return <Cactus key={cactus.position} position={cactus.position} image={cactus.image}/>;
         })}
         <Dino dinoImage={dino.current.currentImage} position={dino.current.position}/>
         <Ground groundPosition={groundPosition}/>
         <Ground groundPosition={groundPosition + 300}/>
-
-
       </Box>
     );
   }

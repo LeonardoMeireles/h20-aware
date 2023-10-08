@@ -1,7 +1,7 @@
 import { Image } from 'grommet';
-import dinoStationary from '../../../assets/images/dino-game/dino-stationary.png';
-import dinoRun0 from '../../../assets/images/dino-game/dino-run-0.png';
-import dinoRun1 from '../../../assets/images/dino-game/dino-run-1.png';
+import dinoStationary from '../../../assets/images/dino-game/dino-stationary.svg';
+import dinoRun0 from '../../../assets/images/dino-game/dino-run-0.svg';
+import dinoRun1 from '../../../assets/images/dino-game/dino-run-1.svg';
 import { DINO_FRAME_COUNT, FRAME_TIME, GRAVITY, JUMP_SPEED } from '../utils/dino-constants';
 
 export interface Dinosaur {

@@ -6,7 +6,6 @@ import { IParallax, Parallax, ParallaxLayer } from '@react-spring/parallax';
 import Ocean from './pages/ocean/Ocean';
 import Waves from './pages/ocean/components/Waves/Waves';
 import smilingSun from './assets/gifs/ocean/smiling-sun.gif';
-import mist from './assets/gifs/ocean/mist.gif';
 import ajAstronaut from './assets/images/aj/aj-astronaut.png';
 import ajSplash from './assets/images/aj/aj-splash.png';
 import ajBasic from './assets/images/aj/aj-basic.svg';
@@ -22,6 +21,7 @@ function App() {
   const [showDinoGame] = useState<boolean>(false);
   const parallaxRef = useRef<IParallax>(null!);
   const [currentHeight, setCurrentHeight] = useState(0);
+  const updatePosition = [1200, 1300, 1450, 1650];
 
   //TODO: make proper loader detection for globe and assets
   useEffect(() => {
@@ -30,13 +30,15 @@ function App() {
     }, 1000);
   }, []);
 
+
   return (
     <Box height={'100vh'} width={'100vw'}>
       <LoadingPage isLoading={isLoading}/>
       <Parallax
         onScrollCapture={(e) => {
           //Avoid re-render on particles, Parallax bug prevents rendering components separately
-          if (parallaxRef.current.current > 1250 && parallaxRef.current.current < 2350) setCurrentHeight(parallaxRef.current.current);
+          if (updatePosition.some((position) => (parallaxRef.current.current > position && currentHeight < position) || (parallaxRef.current.current < position && currentHeight > position)))
+            setCurrentHeight(parallaxRef.current.current);
         }}
         ref={parallaxRef}
         pages={10}
@@ -65,19 +67,18 @@ function App() {
           <Waves/>
         </ParallaxLayer>
 
-        {currentHeight < 1300
-          ? <ParallaxLayer
-            speed={0.1}
-            sticky={{start: 0, end: 1.25}}
-          >
-            <Image
-              height={'10%'}
-              margin={{left: '77.5vw', top: '60vh'}}
-              src={ajAstronaut}
-            />
-          </ParallaxLayer>
-          : <></>
-        }
+        <ParallaxLayer
+          speed={0.1}
+          sticky={{start: 0, end: 1.25}}
+        >
+          <Image
+            height={'10%'}
+            opacity={(currentHeight < 1300) ? '0.8' : '0'}
+            margin={{left: '77.5vw', top: '60vh'}}
+            src={ajAstronaut}
+            style={{transition: '0.01s linear'}}
+          />
+        </ParallaxLayer>
 
         <ParallaxLayer
           speed={0.1}
@@ -85,9 +86,10 @@ function App() {
         >
           <Image
             //Avoid image loading on hosted web app
-            opacity={(currentHeight > 1300 && currentHeight < 1550) ? '0.8' : '0'}
+            opacity={(currentHeight > 1300 && currentHeight < 1450) ? '0.8' : '0'}
             height={'10%'}
             margin={{left: '74.5vw', top: '60vh'}}
+            style={{transition: '0.01s linear'}}
             src={ajSplash}
           />
         </ParallaxLayer>
@@ -99,11 +101,12 @@ function App() {
           <Image
             height={'10%'}
             //Avoid image loading on hosted web app
-            opacity={currentHeight > 1550 ? '0.8' : '0'}
+            opacity={currentHeight > 1450 ? '0.8' : '0'}
             margin={{
-              left: `${Math.max(202.5 - (currentHeight * 0.08), 50)}vw`,
-              top: `60vh`
+              left: `${currentHeight > 1650 ? 50 : 76}vw`,
+              top: `${currentHeight > 1650 ? 70 : 60}vh`,
             }}
+            style={{transition: '0.2s linear'}}
             src={ajBasic}
           />
         </ParallaxLayer>
@@ -124,31 +127,29 @@ function App() {
           />
         </ParallaxLayer>
 
-        {currentHeight > 1200
-          ? <ParallaxLayer
-            offset={1}
+        <ParallaxLayer
+          offset={1}
+          style={{
+            display: 'flex',
+            justifyContent: 'end',
+            opacity: currentHeight > 1500 ? 1 : 0,
+            transition: '0.5s linear'
+          }}
+          speed={0.1}
+          sticky={{start: 1, end: 2}}
+        >
+          <Text
+            margin={'11.5vh 25vw 0 0'}
+            color={'#FFF'}
+            size={'3.5vmin'}
+            weight={600}
             style={{
-              display: 'flex',
-              justifyContent: 'end',
-              opacity: Math.min((currentHeight - 1400) / 400, 1)
+              textShadow: '0 0 18px #000, 0 0 5px #282828',
             }}
-            speed={0.1}
-            sticky={{start: 1, end: 2}}
           >
-            <Text
-              margin={'11.5vh 25vw 0 0'}
-              color={'#FFF'}
-              size={'3.5vmin'}
-              weight={600}
-              style={{
-                textShadow: '0 0 18px #000, 0 0 5px #282828',
-              }}
-            >
-              Text goes here
-            </Text>
-          </ParallaxLayer>
-          : <></>
-        }
+            Text goes here
+          </Text>
+        </ParallaxLayer>
 
         <ParallaxLayer
           sticky={{start: 1, end: 2}}
