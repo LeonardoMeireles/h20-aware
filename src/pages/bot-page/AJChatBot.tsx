@@ -14,7 +14,10 @@ const AJChatBot = () => {
             console.log('Test');
             setShowChat(false);
           }}
+          background={{size: '0px'}}
           style={{
+            width: 'fit-content',
+            height: 'fit-content',
             justifyContent: 'center',
             justifyItems: 'center',
             alignItems: 'center'
