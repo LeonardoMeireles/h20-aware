@@ -1,0 +1,63 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "H20 Aware API",
+    "description": "API documentation",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3001",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/precipitation/lat/{lat}/long/{long}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "long",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/evaporation/lat/{lat}/long/{long}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "long",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
