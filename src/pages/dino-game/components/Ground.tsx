@@ -1,5 +1,5 @@
 import { Image } from 'grommet';
-import groundImage from '../../../assets/images/dino-game/ground.png';
+import groundImage from '../../../assets/images/dino-game/ground.svg';
 
 interface GroundProps {
   groundPosition: number;

@@ -8,5 +8,5 @@ export const CACTUS_INTERVAL_MAX = 250;
 
 export const DEFAULT_CACTUS: CactusConfig = {
   nextCactusTime: CACTUS_INTERVAL_MIN,
-  cactiPosition: []
+  cacti: []
 };
