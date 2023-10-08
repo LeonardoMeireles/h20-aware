@@ -14,10 +14,7 @@ const AJChatBot = () => {
             console.log('Test');
             setShowChat(false);
           }}
-          background={{size: '0px'}}
           style={{
-            width: 'fit-content',
-            height: 'fit-content',
             justifyContent: 'center',
             justifyItems: 'center',
             alignItems: 'center'
@@ -34,7 +31,6 @@ const AJChatBot = () => {
           >
             {/*TODO: Handle Iframe loading*/}
             <iframe
-
               title={'ajChatBot'}
               src={'https://www.chatbase.co/chatbot-iframe/TGQ6UD8srt56EBH3kyN4O'}
               width={'100%'}

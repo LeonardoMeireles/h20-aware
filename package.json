@@ -53,5 +53,9 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "typescript": "^5.2.2"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/LeonardoMeireles/h20-aware.git",
+  "author": "<gaandrade25@gmail.com>",
+  "license": "MIT"
 }
